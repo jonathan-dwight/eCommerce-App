@@ -1,22 +1,16 @@
 import React from 'react';
 import './App.css';
-import HomePage from './pages/homepage' //pages folder is non reusuable components
-
 import { Route, Switch } from 'react-router-dom'
 
-const HatsPage = () => {
-  return (
-    <div>
-        <h1>Hats Page</h1>
-    </div>
-  )
-}
+import HomePage from './pages/homepage' //pages folder is non reusuable components
+import ShopPage from './pages/shop/shop'
+
 
 function App() {
   return (
     <div>
       <Switch> 
-        <Route exact path ="/shop/hats" component ={HatsPage} />
+        <Route exact path ="/shop/" component ={ShopPage} />
         <Route exact path ="/" component={HomePage} />
       </Switch>
     </div>
