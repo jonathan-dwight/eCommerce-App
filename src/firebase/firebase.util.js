@@ -12,6 +12,34 @@ const config = {
     measurementId: "G-YXDSSLGK4T"
 };
 
+//storing user for google to create
+
+export const createUserProfileDocument = async (userAuth, ...addtionalData) => {
+    if (!userAuth) return;
+
+    // have to use documentRef object to perform CRUD methods
+    const userRef = firestore.doc(`users/${userAuth.uid}`)
+    const snapShot = await userRef.get();
+
+    if (!snapShot.exists) {
+        const { displayName, email} = userAuth;
+        const createdAt = new Date();
+
+        try {
+            await userRef.set({
+                displayName,
+                email,
+                createdAt,
+                ...addtionalData
+            })
+        } catch (err) {
+            console.log('error creating user', err.message)
+        }
+    }
+    return userRef;
+}
+
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
@@ -25,4 +53,8 @@ provider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 
+// how to query into database
+//firestone.collection('users').doc('/id').collection('cart-items).doc('id')
+//firestone.doc('/users/id/cartItems/id')
+//firestone.collection('/users/id/cartItems/')
 
