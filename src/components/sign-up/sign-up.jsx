@@ -26,7 +26,7 @@ class SignUp extends React.Component {
 
     handleSubmit = async e => {
         e.preventDefault();
-        debugger
+
         const { displayName, email, password, confirmPassword } = this.state;
 
         if (password !== confirmPassword) {
@@ -34,37 +34,20 @@ class SignUp extends React.Component {
             return;
         }
 
-        // try {
-        //     const { user } = await auth.createUserWithEmailAndPassword(email, password)
-        //     console.log(displayName)
-        //     await createUserProfileDocument(user, { displayName } );
-
-        //     // this.setState({
-        //     //     displayName: "",
-        //     //     email: "",
-        //     //     password: "",
-        //     //     confirmPassword: ""
-        //     // })
-
-        // } catch(err) {
-        //     console.log(err)
-        // }
         try {
-            const { user } = await auth.createUserWithEmailAndPassword(
-                email,
-                password
-            );
-
-            await createUserProfileDocument(user, { displayName });
+            const { user } = await auth.createUserWithEmailAndPassword(email, password)
+            console.log(displayName)
+            await createUserProfileDocument(user, { displayName } );
 
             this.setState({
-                displayName: '',
-                email: '',
-                password: '',
-                confirmPassword: ''
-            });
-        } catch (error) {
-            console.error(error);
+                displayName: "",
+                email: "",
+                password: "",
+                confirmPassword: ""
+            })
+
+        } catch(err) {
+            console.log(err)
         }
     }
 
