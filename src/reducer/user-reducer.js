@@ -5,6 +5,7 @@ const INITIAL_STATE = {
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
+    debugger
     switch (action.type) {
         case RECEIVE_CURRENT_USER:
             return {

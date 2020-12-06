@@ -36,10 +36,10 @@ const mapStateToProps = (state) => {
     })
 }
 
-const mapDispatchToProps = (dispatch) => {
-    // return ({
-    //     recieveCurrentUser:
-    // })
-}
+// const mapDispatchToProps = (dispatch) => {
+//     // return ({
+//     //     recieveCurrentUser:
+//     // })
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(mapStateToProps, null)(Header)

@@ -1,9 +1,11 @@
 
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER'
 
-const receiveUser = (user) => {
+export const receiveUser = (payload) => {
     return {
         type: RECEIVE_CURRENT_USER,
-        user
+        payload
     }
 }
+
+
