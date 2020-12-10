@@ -19,6 +19,13 @@ export const selectCartItemsCount = createSelector(
     }, 0)
 )
 
+export const selectCartTotal = createSelector(
+    [selectCartItems],
+    cartItems => cartItems.reduce((acc, cartItem,) => {
+        return acc + cartItem.quantity * cartItem.price
+    }, 0)
+)
+
 // this is a memoized selector
 
 // this allows react not to fully rerrender if this part of state is not changing

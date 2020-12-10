@@ -7,6 +7,7 @@ import HomePage from './pages/homepage/homepage' //pages folder is non reusuable
 import ShopPage from './pages/shop/shop'
 import Header from './components/header/header';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
+import CheckOut from './components/checkout/checkout'
 import { selectCurrentUser } from './selectors/user_selector';
 import { createStructuredSelector } from 'reselect';
 
@@ -61,6 +62,7 @@ class App extends React.Component {
               <SignInAndSignUp />
             )
           } />
+          <Route exact path ='/checkout' component={CheckOut} />
           <Route exact path ="/" component={HomePage} />
         </Switch>
       </div>
