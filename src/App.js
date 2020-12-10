@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import HomePage from './pages/homepage/homepage' //pages folder is non reusuable components
 import ShopPage from './pages/shop/shop'
 import Header from './components/header/header';
-import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up'
+import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
+import { selectCurrentUser } from './selectors/user_selector';
+import { createStructuredSelector } from 'reselect';
 
 import { receiveUser } from './action/user_action'
 
@@ -66,11 +68,9 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.user.currentUser
-  }
-}
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+})
 
 const mapDispatchToProps = (dispatch) => {
   return ({
