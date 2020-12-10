@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { auth } from '../../firebase/firebase.util';
+import CartIcon from '../cart-icon/cart-icon'
+import CartDropDown from '../cart-dropdown/cart-dropdown'
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.scss';
@@ -14,6 +16,8 @@ const Header = (props) => {
         <Link className="option" to="/signin">Sign In</Link>
     )
 
+    let cart = (!props.hidden) ?  <CartDropDown />  : null
+
     return (
         <div className="header">
             <Link to="/">
@@ -25,14 +29,18 @@ const Header = (props) => {
                 <Link className="option" to='/shop'>CONTACT</Link> 
                 {/* will change later to github and linkedIn */}
                 {user}
+                <CartIcon />
             </div>
+            {cart}
         </div>
     )
 }
 
+// {user: {currentUser }, cart: {hidden}}
 const mapStateToProps = (state) => {
     return ({ 
-        currentUser: state.user.currentUser 
+        currentUser: state.user.currentUser,
+        hidden: state.cart.hidden
     })
 }
 
