@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect} from 'react-redux';
-import { Link, withRouter  } from 'react-router-dom'
+import { withRouter  } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect';
 import { selectCartItems } from '../../selectors/cart_selector'
 import CustomButton from '../custom-button/custom-button';
@@ -25,10 +25,12 @@ const CartDropDown = (props) => {
             <div className='cart-items'>
                 {cartItems}
             </div>
-            <Link to='/checkout'>
-                <CustomButton onClick={() => props.toggleCartHidden()}>
-                    GO TO CHECKOUT</CustomButton>   
-            </Link>
+            
+            <CustomButton onClick={() => {
+                props.toggleCartHidden();
+                props.history.push('/checkout');
+            }}>GO TO CHECKOUT</CustomButton>
+
         </div>
     )
 }
