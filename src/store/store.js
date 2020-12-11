@@ -1,17 +1,25 @@
+// import { createStore, applyMiddleware } from 'redux';
+// import { persistStore } from 'redux-persist';
+// import logger from 'redux-logger';
+// import rootReducer from '../reducer/root-reducer';
+
+// const middlewares = [thunk, logger];
+
+// export const configureStore = createStore(rootReducer, applyMiddleware(...middlewares))
+
+// export const persistor = persistStore(configureStore)
+
+// export default { configureStore, persistor }
+
 import { createStore, applyMiddleware } from 'redux';
+import { persistStore } from 'redux-persist';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+
 import rootReducer from '../reducer/root-reducer';
 
-const middlewares = [thunk, logger];
+const middlewares = [logger];
 
-// if (process.env.NODE_ENV !== 'production') {
-//     const { logger } = require("redux-logger");
-//     middlewares.push(logger);
-// }
+export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
-const configureStore = (preloadedState = {}) => (
-    createStore(rootReducer, preloadedState, applyMiddleware(...middlewares))
-)
-
-export default configureStore;
+export const persistor = persistStore(store);
