@@ -9,34 +9,36 @@ import { createStructuredSelector } from 'reselect';
 import { selectCartHidden } from '../../selectors/cart_selector';
 import { selectCurrentUser } from '../../selectors/user_selector';
 
+import { HeaderContainer, LogoContainer, OptionsContainer, OptionDiv, OptionLink} from './header.styles'
+
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.scss';
 
 const Header = (props) => {
 
     let user = (props.currentUser) ? (
-        <div className="option" onClick={() => auth.signOut()}>Sign Out</div>
+        <OptionDiv onClick={() => auth.signOut()}>Sign Out</OptionDiv>
     ) : (
-        <Link className="option" to="/signin">Sign In</Link>
+        <OptionLink to="/signin">Sign In</OptionLink>
     )
 
     let cart = (!props.hidden) ?  <CartDropDown />  : null
 
     return (
-        <div className="header">
-            <Link to="/">
+        <HeaderContainer>
+            <LogoContainer to='/'>
                 <Logo className="logo" />
-            </Link>
+            </LogoContainer>
 
-            <div className="options">
-                <Link className="option" to='/shop'>SHOP</Link>
-                <Link className="option" to='/shop'>CONTACT</Link> 
+            <OptionsContainer>
+                <OptionLink to='/shop'>SHOP</OptionLink>
+                <OptionLink to='/shop'>CONTACT</OptionLink> 
                 {/* will change later to github and linkedIn */}
                 {user}
                 <CartIcon />
-            </div>
+            </OptionsContainer>
             {cart}
-        </div>
+        </HeaderContainer>
     )
 }
 
