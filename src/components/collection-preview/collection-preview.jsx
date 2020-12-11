@@ -7,7 +7,8 @@ const CollectionPreview = (props) => {
 
     //filter items less than 4 
     //can be slow in production
-
+    //can create a carousel
+    
     let items = props.items
         .filter((item,idx) => idx < 4)
         .map((item) => {
