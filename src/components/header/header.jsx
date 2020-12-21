@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { auth } from '../../firebase/firebase.util';
 import CartIcon from '../cart-icon/cart-icon'
 import CartDropDown from '../cart-dropdown/cart-dropdown';
+import { toggleCart } from '../../action/cart_action'
 
 import { createStructuredSelector } from 'reselect';
 import { selectCartHidden } from '../../selectors/cart_selector';
@@ -25,13 +26,20 @@ const Header = (props) => {
 
     return (
         <HeaderContainer>
-            <LogoContainer to='/'>
+            <LogoContainer to='/'
+                onClick={(!props.hidden) ? props.toggleCartHidden : null}>
                 <Logo className="logo" />
             </LogoContainer>
 
             <OptionsContainer>
-                <OptionLink to='/shop'>SHOP</OptionLink>
-                <OptionLink to='/shop'>CONTACT</OptionLink> 
+                <OptionLink to='/shop' 
+                    onClick={(!props.hidden) ? props.toggleCartHidden : null}
+                >SHOP</OptionLink>
+                
+                <OptionLink to='/shop'
+                    onClick={(!props.hidden) ? props.toggleCartHidden : null}
+                >CONTACT</OptionLink> 
+                
                 {/* will change later to github and linkedIn */}
                 {user}
                 <CartIcon />
@@ -48,10 +56,10 @@ const mapStateToProps = createStructuredSelector({
     hidden: selectCartHidden
 })
 
-// const mapDispatchToProps = (dispatch) => {
-//     // return ({
-//     //     recieveCurrentUser:
-//     // })
-// }
+const mapDispatchToProps = (dispatch) => {
+    return ({
+        toggleCartHidden: () => dispatch(toggleCart())
+    })
+}
 
-export default connect(mapStateToProps, null)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
