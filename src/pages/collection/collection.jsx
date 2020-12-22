@@ -25,8 +25,9 @@ const CollectionPage = ({ collection }) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    //we pass in state because its a curried function 
+
     collection: selectCollection(ownProps.match.params.collectionId)(state)
+    //we pass in state because its a curried function 
 })
 
 export default connect(mapStateToProps)(CollectionPage);

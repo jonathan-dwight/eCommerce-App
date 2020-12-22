@@ -20,9 +20,14 @@ export const createUserProfileDocument = async (userAuth, addtionalData) => {
     if (!userAuth) return;
 
     // have to use documentRef object to perform CRUD methods
-    const userRef = firestore.doc(`users/${userAuth.uid}`)
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    // const collectionRef = firestore.collection('users');
+
     const snapShot = await userRef.get();
-    
+    // const collectionSnapshot = await collectionRef.get();
+    // console.log({ collection: collectionSnapshot.docs.map(doc => doc.data()) });
+    // get collection of users
+
     if (!snapShot.exists) {
         const { displayName, email } = userAuth;
         const createdAt = new Date();
@@ -42,6 +47,21 @@ export const createUserProfileDocument = async (userAuth, addtionalData) => {
 }
 
 
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = firestore.collection(collectionKey);
+    // have to do individual calls because can only set once
+
+    // have to do batch right to group all request
+
+    const batch = firestore.batch();
+    objectsToAdd.forEach(obj => {
+        const newDocRef = collectionRef.doc();
+        batch.set(newDocRef, obj);
+    })
+    // returns a promise
+    return await batch.commit()
+}
+
 
 
 export const auth = firebase.auth();
@@ -60,3 +80,14 @@ export default firebase;
 //firestone.doc('/users/id/cartItems/id')
 //firestone.collection('/users/id/cartItems/')
 
+//queryReference does not have the actual data of the collection or document
+
+//DocumentReference vs CollectionReference
+// use document for CRUD methods .set(), .get(), .update(), .delete()
+// can add documents to collections using collectionRed using the .add()
+// get snapshotObject from the referenceObject using the .get() method
+
+// document ref returns a documentSnapshot object -- allows us to check if docuemnt exist
+// at this quesry .exists and then .data to grab the data
+
+// collectionRef returns querySnapshot object
