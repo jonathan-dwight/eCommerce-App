@@ -45,11 +45,22 @@ class App extends React.Component {
       }
       
     } 
-  )}
+  )};
+
+  // observable -- wraps all the data streams
+  // observer - 3 calls
+  // next - do something with value
+  // error - do something with error
+  // complete - do something when finished
+  // subscription ties obserer w/ listerner
+  // we are subscribing to the event
+  // autho.onAuthStateChanged - stream of events, we pass in function
+  // async userAuth would be the next function.. we can also pass in the error
+  // can have multiple observables 
 
   componentWillUnmount() {
     this.unsubscribeFromAuth();
-  }
+  };
 
   render() {
     return (
