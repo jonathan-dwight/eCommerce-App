@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -17,19 +17,17 @@ import { auth, createUserProfileDocument } from './firebase/firebase.util'
 
 
 
-class App extends React.Component {
-
-  //prevent memory leaks
-  unsubscribeFromAuth = null;
-
-  componentDidMount() {
-    const { setCurrentUser } = this.props;
-
-    this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth => {
+const App = ({ currentUser, setCurrentUser }) => {
+  
+  
+  useEffect(() => {
+      //prevent memory leaks
+      let unsubscribeFromAuth = null;
+      unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         //checking if database has been updated
-
+  
         //will send us snapshot - getting data from the user/id comes with reg snapshot
         //.data method returns JSON object of the object
         //,exists returns a boolean if it exists
@@ -44,8 +42,13 @@ class App extends React.Component {
         setCurrentUser(userAuth)
       }
       
-    } 
-  )};
+    });
+
+    return () => {
+      unsubscribeFromAuth()
+    }
+  }, [setCurrentUser]) 
+
 
   // observable -- wraps all the data streams
   // observer - 3 calls
@@ -58,18 +61,17 @@ class App extends React.Component {
   // async userAuth would be the next function.. we can also pass in the error
   // can have multiple observables 
 
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  };
+  // componentWillUnmount() {
+  //   this.unsubscribeFromAuth();
+  // };
 
-  render() {
     return (
       <div>
         <Header />
         <Switch> 
           <Route path ="/shop" component ={ShopPage} />
           <Route exact path ="/signin" render={() => 
-            this.props.currentUser ? (
+            currentUser ? (
               <Redirect to='/' />
             ) : (
               <SignInAndSignUp />
@@ -81,7 +83,6 @@ class App extends React.Component {
         </Switch>
       </div>
     );
-  }
 }
 
 const mapStateToProps = createStructuredSelector({
